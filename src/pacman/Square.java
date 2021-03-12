@@ -7,7 +7,12 @@ import java.util.Arrays;
  * The top row and the leftmost column have index 0.
  */
 public class Square {
-	
+
+	public MazeMap map;
+	public int rowIndex;
+	public int columnIndex;
+	public boolean[] passable;
+
 	public MazeMap getMazeMap() { throw new RuntimeException("Not yet implemented"); }
 	
 	public int getRowIndex() { throw new RuntimeException("Not yet implemented"); }
@@ -21,8 +26,8 @@ public class Square {
 	}
 	
 	/**
-	 * Returns this square's neighbor in the given direction.
-	 * If this square has no neigbor in the given direction, return the square that is furthest away in the opposite direction.
+	 * Returns this square's neighbor in the given direction. If this square has no neighbor in the given direction,
+	 * return the square that is furthest away in the opposite direction.
 	 */
 	// No formal documentation required
 	public Square getNeighbor(Direction direction) {
@@ -39,8 +44,8 @@ public class Square {
 	}
 
 	/**
-	 * Returns the directions that are different from the given excluded direction and such that the neighbor in that direction is passable.
-	 * The returned array shall have no null elements and shall have no duplicates.
+	 * Returns the directions that are different from the given excluded direction and such that the neighbor in that
+	 * direction is passable. The returned array shall have no null elements and shall have no duplicates.
 	 */
 	// No formal documentation required
 	public Direction[] getPassableDirectionsExcept(Direction excludedDirection) {
@@ -48,7 +53,8 @@ public class Square {
 	}
 	
 	/**
-	 * Returns whether the given square refers to the same {@code MazeMap} object and has the same row and column index as this square.  
+	 * Returns whether the given square refers to the same {@code MazeMap} object and has the same row and column index
+	 * as this square.
 	 */
 	public boolean equals(Square other) {
 		throw new RuntimeException("Not yet implemented");
