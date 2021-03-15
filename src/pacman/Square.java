@@ -13,18 +13,26 @@ public class Square {
 	public int columnIndex;
 	public boolean[] passable;
 
-	public MazeMap getMazeMap() { throw new RuntimeException("Not yet implemented"); }
+	public MazeMap getMazeMap() {
+		return map;
+	}
 	
-	public int getRowIndex() { throw new RuntimeException("Not yet implemented"); }
+	public int getRowIndex() {
+		return rowIndex;
+	}
 	
-	public int getColumnIndex() { throw new RuntimeException("Not yet implemented"); }
-	
-	public boolean isPassable() { throw new RuntimeException("Not yet implemented"); }
-	
+	public int getColumnIndex() {
+		return columnIndex;
+	}
+
+	public boolean isPassable() {
+		return map.isPassable(getRowIndex(), getColumnIndex());
+	}
+
 	public static Square of(MazeMap mazeMap, int rowIndex, int columnIndex) {
 		throw new RuntimeException("Not yet implemented");
 	}
-	
+
 	/**
 	 * Returns this square's neighbor in the given direction. If this square has no neighbor in the given direction,
 	 * return the square that is furthest away in the opposite direction.
