@@ -29,7 +29,7 @@ public class MazeMap {
 	 * The square in the top-left corner of the maze has row index 0 and column index 0.
 	 */
 	public boolean isPassable(int rowIndex, int columnIndex) {
-		return rowIndex == 0 & columnIndex == 0;	// Don't really know what condition should be here
+		return passable[rowIndex * width + columnIndex];
 	}
 	
 	/**
