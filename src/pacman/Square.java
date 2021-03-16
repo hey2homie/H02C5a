@@ -53,9 +53,7 @@ public class Square {
 	 *
 	 * @basic
 	 */
-	public boolean isPassable() {
-		return passable;
-	}
+	public boolean isPassable() { return map.isPassable(rowIndex, columnIndex); }
 
 	/**
 	 *
@@ -73,7 +71,7 @@ public class Square {
 	 *
 	 */
 	public static Square of(MazeMap mazeMap, int rowIndex, int columnIndex) {
-		// I believe that this method should return instance of Square, but not sure yet
+		// I believe that this method should return newly created instance of Square, but not sure yet
 		return new Square(mazeMap, rowIndex, columnIndex);
 	}
 
@@ -84,7 +82,42 @@ public class Square {
 	// No formal documentation required
 	public Square getNeighbor(Direction direction) {
 		// Implementation hint: use method java.lang.Math.floorMod.
-		throw new RuntimeException("Not yet implemented");
+		// Not sure if it's correct until everything is done and we can run the application.
+		Square square = null;
+
+		switch (direction) {
+			case RIGHT -> {
+				if (columnIndex == map.getWidth() - 1) {
+					square = Square.of(map, rowIndex, 0);
+				} else {
+					square = Square.of(map, rowIndex, columnIndex + 1);
+				}
+			}
+			case LEFT -> {
+				if (columnIndex == 0) {
+					square = Square.of(map, rowIndex, map.getWidth() - 1);
+				} else {
+					square = Square.of(map, rowIndex, columnIndex - 1);
+				}
+			}
+			case UP -> {
+				if (rowIndex == 0) {
+					square = Square.of(map, map.getHeight() - 1, columnIndex);
+				} else {
+					square = Square.of(map, rowIndex - 1, columnIndex);
+				}
+			}
+			case DOWN -> {
+				if (rowIndex == map.getHeight() - 1) {
+					square = Square.of(map, 0, columnIndex);
+				} else {
+					square = Square.of(map, rowIndex - 1, columnIndex);
+				}
+			}
+		}
+
+		return square;
+
 	}
 
 	/**
@@ -92,7 +125,18 @@ public class Square {
 	 */
 	// No formal documentation required
 	public boolean canMove(Direction direction) {
-		throw new RuntimeException("Not yet implemented");
+
+		boolean canMove;
+
+		switch (direction) {
+			case RIGHT -> { canMove = map.isPassable(rowIndex, columnIndex + 1); }
+			case LEFT -> { canMove = map.isPassable(rowIndex, columnIndex - 1); }
+			case UP -> { canMove = map.isPassable(rowIndex + 1, columnIndex - 1); }
+			case DOWN -> { canMove = map.isPassable(rowIndex - 1, columnIndex - 1); }
+			default -> throw new IllegalStateException("Unexpected value: " + direction);
+		}
+
+		return canMove;
 	}
 
 	/**
@@ -108,8 +152,6 @@ public class Square {
 	 * Returns whether the given square refers to the same {@code MazeMap} object and has the same row and column index
 	 * as this square.
 	 */
-	public boolean equals(Square other) {
-		throw new RuntimeException("Not yet implemented");
-	}
+	public boolean equals(Square other) { return other.equals(Square.of(map, rowIndex, columnIndex)); }
 	
 }
