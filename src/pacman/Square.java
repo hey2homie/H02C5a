@@ -5,32 +5,76 @@ import java.util.Arrays;
 /**
  * Each instance of this class represents a position in a maze, specified by a row index and a column index.
  * The top row and the leftmost column have index 0.
+ *
+ * @immutable
  */
 public class Square {
 
-	public MazeMap map;
-	public int rowIndex;
-	public int columnIndex;
-	public boolean[] passable;
+	/**
+	 * @invar | map != null
+	 * @invar
+	 * @invar
+	 * @invar
+	 */
+	private final MazeMap map;
+	private final int rowIndex;
+	private final int columnIndex;
+	private final boolean passable;
 
+	/**
+	 * Returns instance (!!! OR OBJECT? !!!) of the MazeMap class.
+	 *
+	 * @basic
+	 */
 	public MazeMap getMazeMap() {
 		return map;
 	}
-	
+
+	/**
+	 * Returns row index of this square.
+	 *
+	 * @basic
+	 */
 	public int getRowIndex() {
 		return rowIndex;
 	}
-	
+
+	/**
+	 * Returns column index of this square.
+	 *
+	 * @basic
+	 */
 	public int getColumnIndex() {
 		return columnIndex;
 	}
 
+	/**
+	 * Returns whether the square is passable.
+	 *
+	 * @basic
+	 */
 	public boolean isPassable() {
-		return map.isPassable(getRowIndex(), getColumnIndex());
+		return passable;
 	}
 
+	/**
+	 *
+	 *
+	 */
+	public Square(MazeMap map, int rowIndex, int columnIndex) {
+		this.map = map;
+		this.rowIndex = rowIndex;
+		this.columnIndex = columnIndex;
+		this.passable = map.isPassable(this.rowIndex, this.columnIndex);
+	}
+
+	/**
+	 *
+	 *
+	 */
 	public static Square of(MazeMap mazeMap, int rowIndex, int columnIndex) {
-		throw new RuntimeException("Not yet implemented");
+		// I believe that this method should return instance of Square, but not sure yet
+		return new Square(mazeMap, rowIndex, columnIndex);
 	}
 
 	/**
