@@ -1,6 +1,8 @@
 package pacman;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Each instance of this class represents a position in a maze, specified by a row index and a column index.
@@ -53,7 +55,7 @@ public class Square {
 	 *
 	 * @basic
 	 */
-	public boolean isPassable() { return map.isPassable(rowIndex, columnIndex); }
+	public boolean isPassable() { return passable; }
 
 	/**
 	 *
@@ -82,7 +84,6 @@ public class Square {
 	// No formal documentation required
 	public Square getNeighbor(Direction direction) {
 		// Implementation hint: use method java.lang.Math.floorMod.
-		// Not sure if it's correct until everything is done and we can run the application.
 		Square square = null;
 
 		switch (direction) {
@@ -111,7 +112,7 @@ public class Square {
 				if (rowIndex == map.getHeight() - 1) {
 					square = Square.of(map, 0, columnIndex);
 				} else {
-					square = Square.of(map, rowIndex - 1, columnIndex);
+					square = Square.of(map, rowIndex + 1, columnIndex);
 				}
 			}
 		}
@@ -126,17 +127,7 @@ public class Square {
 	// No formal documentation required
 	public boolean canMove(Direction direction) {
 
-		boolean canMove;
-
-		switch (direction) {
-			case RIGHT -> { canMove = map.isPassable(rowIndex, columnIndex + 1); }
-			case LEFT -> { canMove = map.isPassable(rowIndex, columnIndex - 1); }
-			case UP -> { canMove = map.isPassable(rowIndex + 1, columnIndex - 1); }
-			case DOWN -> { canMove = map.isPassable(rowIndex - 1, columnIndex - 1); }
-			default -> throw new IllegalStateException("Unexpected value: " + direction);
-		}
-
-		return canMove;
+		return getNeighbor(direction).isPassable();
 	}
 
 	/**
@@ -145,13 +136,25 @@ public class Square {
 	 */
 	// No formal documentation required
 	public Direction[] getPassableDirectionsExcept(Direction excludedDirection) {
-		throw new RuntimeException("Not yet implemented");
+
+		List<Direction> directions = new ArrayList<Direction>();	// So we can dynamically add values (not fixed size)
+
+		for (Direction direction : Direction.values()) {
+			if (direction != excludedDirection && canMove(direction)) {
+				directions.add(direction);
+			}
+		}
+
+		return directions.toArray(new Direction[0]);	// Convert to required data type
 	}
 	
 	/**
 	 * Returns whether the given square refers to the same {@code MazeMap} object and has the same row and column index
 	 * as this square.
 	 */
-	public boolean equals(Square other) { return other.equals(Square.of(map, rowIndex, columnIndex)); }
+	public boolean equals(Square other) {
+		return other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex()
+				&& other.getColumnIndex() == getColumnIndex();
+	}
 	
 }
