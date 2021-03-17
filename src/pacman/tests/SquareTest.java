@@ -1,5 +1,6 @@
 package pacman.tests;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import pacman.Direction;
 import pacman.MazeMap;
@@ -66,7 +67,8 @@ class SquareTest {
 
     @Test
     void getPassableDirectionsExcept() {
-        System.out.println(Arrays.toString(leftSquare.getPassableDirectionsExcept(Direction.LEFT)));
+        Assert.assertArrayEquals(new Direction[]{Direction.DOWN, Direction.UP},
+                leftSquare.getPassableDirectionsExcept(Direction.LEFT));
     }
 
     @Test
