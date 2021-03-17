@@ -9,14 +9,14 @@ package pacman;
  * @invar This object's width and height cannot be less than 1.
  * 		| getWidth() > 0 && getHeight() > 0
  * @invar This object's length of passable should be equal to multiplication of width and height.
- * 		| passable.length() == getWidth() * getHeight()
+ * 		| getPassable().length == getWidth() * getHeight()
  */
 public class MazeMap {
 
 	/**
-	 * @invar | getWidth() > 0
-	 * @invar | getHeight() > 0
-	 * @invar | passable.length() == getWidth() * getHeight()
+	 * @invar | width > 0
+	 * @invar | height > 0
+	 * @invar | passable.length == width * height
 	 */
 	private final int width;
 	private final int height;
@@ -39,19 +39,20 @@ public class MazeMap {
 	public int getHeight() {
 		return height;
 	}
+	
+	public boolean[] getPassable() {
+		return passable;
+	}
 
 	/**
 	 * Returns whether the square in this maze at row index {@code row} and column index {@code column} is passable.
 	 * The square in the top-left corner of the maze has row index 0 and column index 0.
 	 *
-	 * @pre | rowIndex >= 0 && rowIndex + 1 <= this.height
-	 * @pre | columnIndex >= 0 && columnIndex + 1 <= this.width
+	 * @pre | rowIndex >= 0 && rowIndex + 1 <= getHeight()
+	 * @pre | columnIndex >= 0 && columnIndex + 1 <= getWidth()
 	 *
 	 * @throws IllegalArgumentException if given row index or column index go beyond maze dimensions
-	 * 		| rowIndex + 1 > this.height || columnIndex + 1 > this.width
-	 *
-	 * @return whether square at given row index and column index is passable.
-	 * 		| isPassable[rowIndex, columnIndex] == passable[rowIndex * width + columnIndex]
+	 * 		| rowIndex + 1 > getHeight() || columnIndex + 1 > getWidth()
 	 */
 	public boolean isPassable(int rowIndex, int columnIndex) {
 		if (rowIndex + 1 > this.height || columnIndex + 1 > this.width) {
@@ -75,11 +76,11 @@ public class MazeMap {
 	 * @post This object's height equal the given height.
 	 * 		| getHeight() == height
 	 * @post This object's passable equal the given passable.
-	 * 		| this.passable == passable
+	 * 		| getPassable() == passable
 	 *
 	 * @throws IllegalArgumentException if the length of given array of booleans is less than multiplication of width
 	 * and height.
-	 * 		| passable.length() == getWidth() * getHeight()
+	 * 		| getPassable().length == getWidth() * getHeight()
 	 */
 	public MazeMap(int width, int height, boolean[] passable) {
 		this.width = width;

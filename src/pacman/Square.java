@@ -1,7 +1,6 @@
 package pacman;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -9,22 +8,29 @@ import java.util.List;
  * The top row and the leftmost column have index 0.
  *
  * @immutable
+ * 
+ * @invar This object's row index that cannot be less then 0 and more than maze height - 1.
+ * 		| getRowIndex() >= 0 && getRowIndex() <= getMazeMap().getHeight() - 1
+ * @invar This object's column index that cannot be less then 0 and more than maze width - 1.
+ * 		| getColumnIndex() >= 0 && getColumnIndex() <= getMazeMap().getWidth() - 1
+ * @invar This object's maze map cannot be null.
+ * 		| getMazeMap() != null
  */
 public class Square {
 
 	/**
 	 * @invar | map != null
-	 * @invar
-	 * @invar
-	 * @invar
+	 * @invar | rowIndex >= 0
+	 * @invar | columnIndex >= 0
+	 * No need to write invariant for passable since it cannot be null.
 	 */
 	private final MazeMap map;
 	private final int rowIndex;
 	private final int columnIndex;
 	private final boolean passable;
-
+	
 	/**
-	 * Returns instance (!!! OR OBJECT? !!!) of the MazeMap class.
+	 * Returns object of the MazeMap class.
 	 *
 	 * @basic
 	 */
@@ -55,11 +61,22 @@ public class Square {
 	 *
 	 * @basic
 	 */
-	public boolean isPassable() { return passable; }
+	public boolean isPassable() {
+		return passable;
+	}
 
 	/**
+	 * Initializes this object so that it represents a maze square at given rowIndex, columnIndex, and whether square is
+	 * passable or not.
 	 *
-	 *
+	 * @pre | map != null
+	 * @pre | rowIndex >= 0 && rowIndex <= map.getHeight() - 1
+	 * @pre | columnIndex >= 0 && columnIndex <= map.getWidth() - 1
+	 * 
+	 * @post | getMazeMap() == map
+	 * @post | getRowIndex() == rowIndex
+	 * @post | getColumnIndex() == columnIndex
+	 * @post | isPassable() == map.isPassable(rowIndex, columnIndex)
 	 */
 	public Square(MazeMap map, int rowIndex, int columnIndex) {
 		this.map = map;
@@ -69,11 +86,16 @@ public class Square {
 	}
 
 	/**
-	 *
-	 *
+	 * Returns newly created instance of Square class, which represents square of the maze at given rowIndex,
+	 * columnIndex, and includes MazeMap instance.
+	 * 
+	 * @pre | mazeMap != null
+	 * @pre | rowIndex >= 0 && rowIndex <= mazeMap.getHeight() - 1
+	 * @pre | columnIndex >= 0 && columnIndex <= mazeMap.getWidth() - 1
+	 * 
+	 * @creates | Square
 	 */
 	public static Square of(MazeMap mazeMap, int rowIndex, int columnIndex) {
-		// I believe that this method should return newly created instance of Square, but not sure yet
 		return new Square(mazeMap, rowIndex, columnIndex);
 	}
 
@@ -151,6 +173,12 @@ public class Square {
 	/**
 	 * Returns whether the given square refers to the same {@code MazeMap} object and has the same row and column index
 	 * as this square.
+	 * 
+	 * @inspects | other
+	 * 
+	 * @pre | other != null
+	 * 
+	 * @post | other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex() && other.getColumnIndex() == getColumnIndex()
 	 */
 	public boolean equals(Square other) {
 		return other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex()
