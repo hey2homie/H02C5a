@@ -4,21 +4,91 @@ import java.util.Random;
 
 /**
  * Each instance of this class represents a ghost in a Pac-Man maze.
+ *
+ * @mutable
+ *
+ * @invar |
+ * @invar |
  */
 public class Ghost {
-	
-	public Square getSquare() { throw new RuntimeException("Not yet implemented"); }
+
+	private Square square;
+	private Direction direction;
+
+	/**
+	 * Returns location of this ghost.
+	 *
+	 * @basic
+	 */
+	public Square getSquare() {
+		return square;
+	}
 	
 	/**
 	 * Returns the direction in which this ghost will preferably move next.
+	 *
+	 * @basic
 	 */
-	public Direction getDirection() { throw new RuntimeException("Not yet implemented"); }
-	
-	public Ghost(Square square, Direction direction) { throw new RuntimeException("Not yet implemented"); }
-	
-	public void setSquare(Square square) { throw new RuntimeException("Not yet implemented"); }
-	
-	public void setDirection(Direction direction) { throw new RuntimeException("Not yet implemented"); }
+	public Direction getDirection() {
+		return direction;
+	}
+
+	/**
+	 *
+	 * @pre |
+	 * @pre |
+	 *
+	 * @post |
+	 * @post |
+	 *
+	 * @throws IllegalArgumentException
+	 */
+	public Ghost(Square square, Direction direction) {
+		if (square == null || direction == null) {
+			throw new IllegalArgumentException("Wrong parameters");
+		}
+
+		this.square = square;
+		this.direction = direction;
+	}
+
+	/**
+	 *
+	 *
+	 * @pre | square != null
+	 *
+	 * @mutates | this.square
+	 *
+	 * @post | getSquare() == square
+	 *
+	 * @throws IllegalArgumentException
+	 */
+	public void setSquare(Square square) {
+		if (square == null) {
+			throw new IllegalArgumentException("Wrong parameters");
+		}
+
+		this.square = square;
+	}
+
+	/**
+	 *
+	 *
+	 * @pre | direction != null
+	 *
+	 * @mutates | this.direction
+	 *
+	 * @post | getDirection() == direction
+	 *
+	 * @throws IllegalArgumentException
+	 */
+	public void setDirection(Direction direction) {
+		if (direction == null) {
+			throw new IllegalArgumentException("Wrong parameters");
+		}
+
+		this.direction = direction;
+	}
 	
 	private static int MOVE_FORWARD_PREFERENCE = 10;
 	
