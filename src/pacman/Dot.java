@@ -5,7 +5,8 @@ package pacman;
  *
  * @immutable
  *
- * @invar | This
+ * @invar This object's square.
+ * 		| getSquare() != null
  */
 public class Dot {
 
@@ -24,11 +25,14 @@ public class Dot {
 	}
 
 	/**
-	 * Initializes this object so that it represents a dot at maze square.
+	 * Initializes this object so that it represents a dot at maze square at given square.
 	 *
 	 * @pre | square != null
 	 *
-	 * @post | getSquare == square
+	 * @throws IllegalArgumentException if given square is null.
+	 * 		| square == null
+	 *
+	 * @post | getSquare() == square
 	 */
 	public Dot(Square square) {
 		this.square = square;
