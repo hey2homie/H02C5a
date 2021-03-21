@@ -7,8 +7,10 @@ import java.util.Random;
  *
  * @mutable
  *
- * @invar |
- * @invar |
+ * @invar This object's square cannot be null.
+ * 		| getSquare() != null
+ * @invar This object's direction cannot be null.
+ * 		| getDirection() != null
  */
 public class Ghost {
 
@@ -34,14 +36,18 @@ public class Ghost {
 	}
 
 	/**
+	 * Initializes this object so that it represents a ghost in the maze at the given square with the initial direction.
 	 *
-	 * @pre |
-	 * @pre |
+	 * @pre | square != null
+	 * @pre | direction != null
 	 *
-	 * @post |
-	 * @post |
+	 * @throws IllegalArgumentException if given square is null.
+	 * 		| square == null
+	 * @throws IllegalArgumentException if given direction is null.
+	 * 		| direction == null
 	 *
-	 * @throws IllegalArgumentException
+	 * @post | square == getSquare()
+	 * @post | direction == getDirection()
 	 */
 	public Ghost(Square square, Direction direction) {
 		if (square == null || direction == null) {
@@ -53,15 +59,15 @@ public class Ghost {
 	}
 
 	/**
-	 *
+	 * Sets this object's square.
 	 *
 	 * @pre | square != null
 	 *
-	 * @mutates | this.square
+	 * @mutates | this
+	 *
+	 * @throws IllegalArgumentException if method's argument is null.
 	 *
 	 * @post | getSquare() == square
-	 *
-	 * @throws IllegalArgumentException
 	 */
 	public void setSquare(Square square) {
 		if (square == null) {
@@ -72,15 +78,15 @@ public class Ghost {
 	}
 
 	/**
-	 *
+	 * Set's this object's direction
 	 *
 	 * @pre | direction != null
 	 *
-	 * @mutates | this.direction
+	 * @mutates | this
+	 *
+	 * @throws IllegalArgumentException if method's argument is null.
 	 *
 	 * @post | getDirection() == direction
-	 *
-	 * @throws IllegalArgumentException
 	 */
 	public void setDirection(Direction direction) {
 		if (direction == null) {
