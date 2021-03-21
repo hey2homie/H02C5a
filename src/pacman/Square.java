@@ -109,10 +109,13 @@ public class Square {
 	 * @pre | rowIndex >= 0 && rowIndex <= mazeMap.getHeight() - 1
 	 * @pre | columnIndex >= 0 && columnIndex <= mazeMap.getWidth() - 1
 	 *
-	 * @creates | Square
+	 * @creates | result
+	 *
+	 * @post | result.getMazeMap() == mazeMap && result.getRowIndex() == rowIndex && result.getColumnIndex() == columnIndex
 	 */
 	public static Square of(MazeMap mazeMap, int rowIndex, int columnIndex) {
-		return new Square(mazeMap, rowIndex, columnIndex);
+		Square result = new Square(mazeMap, rowIndex, columnIndex);
+		return result;
 	}
 
 	/**
@@ -194,11 +197,14 @@ public class Square {
 	 *
 	 * @pre | other != null
 	 *
+	 * @creates | result
+	 *
 	 * @post | other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex() && other.getColumnIndex() == getColumnIndex()
 	 */
 	public boolean equals(Square other) {
-		return other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex()
+		boolean result = other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex()
 				&& other.getColumnIndex() == getColumnIndex();
+		return result;
 	}
 
 }

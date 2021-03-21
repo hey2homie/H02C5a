@@ -11,6 +11,7 @@ package pacman;
  * @invar This object's length of passable should be equal to multiplication of width and height.
  * 		| getPassable().length == getWidth() * getHeight()
  */
+
 public class MazeMap {
 
 	/**
@@ -64,6 +65,8 @@ public class MazeMap {
 	 * 		| columnIndex + 1 > getWidth()
 	 *
 	 * @creates | result
+	 *
+	 * @post | result == getPassable()[rowIndex * getWidth() + columnIndex]
 	 */
 	public boolean isPassable(int rowIndex, int columnIndex) {
 
@@ -82,6 +85,8 @@ public class MazeMap {
 	 * Initializes this object so that it represents a maze layout with the given width, height, and
 	 * passable positions. The passable positions are given in row-major order (i.e. the first {@code width} elements
 	 * of {@code passable} specify the possibility of the maze positions in the first row of the maze).
+	 *
+	 * @inspects | passable
 	 *
 	 * @pre | width > 0
 	 * @pre | height > 0

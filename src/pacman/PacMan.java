@@ -90,10 +90,12 @@ public class PacMan {
 	/**
 	 * Decreases this Pac-Man character's number of lives by one.
 	 *
+	 * @pre | getNbLives() > 0
+	 *
 	 * @mutates | this
 	 *
 	 * @post Number of lives is decreased by one. 
-	 * 		 getNbLives() == getNbLives() - 1
+	 * 		| getNbLives() == old(getNbLives()) - 1
 	 */
 	public void die() {
 		this.nbLives -= 1;

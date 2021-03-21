@@ -35,6 +35,10 @@ public class Dot {
 	 * @post | getSquare() == square
 	 */
 	public Dot(Square square) {
+		if (square == null) {
+			throw new IllegalArgumentException("Square is null");
+		}
+
 		this.square = square;
 	}
 

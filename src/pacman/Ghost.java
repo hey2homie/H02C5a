@@ -66,6 +66,7 @@ public class Ghost {
 	 * @mutates | this
 	 *
 	 * @throws IllegalArgumentException if method's argument is null.
+	 * 		| square == null
 	 *
 	 * @post | getSquare() == square
 	 */
@@ -78,7 +79,7 @@ public class Ghost {
 	}
 
 	/**
-	 * Set's this object's direction
+	 * Set's this object's direction.
 	 *
 	 * @pre | direction != null
 	 *
