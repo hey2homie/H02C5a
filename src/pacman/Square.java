@@ -86,7 +86,7 @@ public class Square {
 	 */
 	public Square(MazeMap map, int rowIndex, int columnIndex) {
 		if (map == null) {
-			throw new IllegalArgumentException("Map is null!");
+			throw new IllegalArgumentException("Map is null");
 		}
 		if (rowIndex < 0 || rowIndex > map.getHeight() - 1) {
 			throw new IllegalArgumentException("Row index cannot be less than zero and more then maze's height - 1");
@@ -167,7 +167,6 @@ public class Square {
 	 */
 	// No formal documentation required
 	public boolean canMove(Direction direction) {
-
 		return getNeighbor(direction).isPassable();
 	}
 
@@ -177,7 +176,6 @@ public class Square {
 	 */
 	// No formal documentation required
 	public Direction[] getPassableDirectionsExcept(Direction excludedDirection) {
-
 		List<Direction> directions = new ArrayList<Direction>();	// So we can dynamically add values (not fixed size)
 
 		for (Direction direction : Direction.values()) {
@@ -193,18 +191,24 @@ public class Square {
 	 * Returns whether the given square refers to the same {@code MazeMap} object and has the same row and column index
 	 * as this square.
 	 *
-	 * @inspects | other
-	 *
 	 * @pre | other != null
 	 *
+	 * @inspects | other
+	 *
 	 * @creates | result
+	 *
+	 * @throws IllegalArgumentException if this method's parameter is null.
+	 * 		| other == null
 	 *
 	 * @post | other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex() && other.getColumnIndex() == getColumnIndex()
 	 */
 	public boolean equals(Square other) {
+		if (other == null) {
+			throw new IllegalArgumentException("Square cannot be null");
+		}
+
 		boolean result = other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex()
 				&& other.getColumnIndex() == getColumnIndex();
 		return result;
 	}
-
 }

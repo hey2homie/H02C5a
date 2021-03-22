@@ -41,5 +41,4 @@ public class Dot {
 
 		this.square = square;
 	}
-
 }

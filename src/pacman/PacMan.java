@@ -55,7 +55,6 @@ public class PacMan {
 	 * 		| getSquare() == square
 	 */
 	public PacMan(int nbLives, Square square) {
-
 		if (nbLives < 1) {
 			throw new IllegalArgumentException("Number of lives cannot be less than 1");
 		}
@@ -100,5 +99,4 @@ public class PacMan {
 	public void die() {
 		this.nbLives -= 1;
 	}
-
 }

@@ -69,7 +69,6 @@ public class MazeMap {
 	 * @post | result == getPassable()[rowIndex * getWidth() + columnIndex]
 	 */
 	public boolean isPassable(int rowIndex, int columnIndex) {
-
 		if (rowIndex + 1 > getHeight() || rowIndex < 0) {
 			throw new IllegalArgumentException("Row index is wrong");
 		}
@@ -108,15 +107,14 @@ public class MazeMap {
 	 * 		| getPassable() == passable
 	 */
 	public MazeMap(int width, int height, boolean[] passable) {
-
-		if (passable.length != width * height) {
-			throw new IllegalArgumentException("Wrong length of the array!");
-		}
 		if (width < 1) {
 			throw new IllegalArgumentException("Maze's width cannot be less than 1");
 		}
 		if (height < 1) {
 			throw new IllegalArgumentException("Maze's height cannot be less than 1");
+		}
+		if (passable.length != width * height) {
+			throw new IllegalArgumentException("Wrong length of the array");
 		}
 
 		this.width = width;

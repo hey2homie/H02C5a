@@ -24,7 +24,6 @@ class SquareTest {
     Square rightSquare = new Square(map, 0, 1);
     Square leftSquare = new Square(map, 0, 2);
     Square identicalSquare = new Square(map, 0, 0);
-    Square squareMiddle = new Square(map, 1, 1);
 
     @Test
     void getMazeMap() {
@@ -49,11 +48,13 @@ class SquareTest {
     @Test
     void of() {
         assertTrue(rightSquare.equals(Square.of(map, 0, 1)));
+        assertFalse(leftSquare.equals(Square.of(map, 0, 1)));
     }
 
     @Test
     void getNeighbor() {
         assertTrue(rightSquare.equals(square.getNeighbor(Direction.RIGHT)));
+        assertFalse(leftSquare.equals(square.getNeighbor(Direction.RIGHT)));
     }
 
     @Test
@@ -74,5 +75,6 @@ class SquareTest {
     @Test
     void testEquals() {
         assertTrue(square.equals(identicalSquare));
+        assertFalse(square.equals(leftSquare));
     }
 }

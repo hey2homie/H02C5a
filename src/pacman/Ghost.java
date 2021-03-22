@@ -50,8 +50,11 @@ public class Ghost {
 	 * @post | direction == getDirection()
 	 */
 	public Ghost(Square square, Direction direction) {
-		if (square == null || direction == null) {
-			throw new IllegalArgumentException("Wrong parameters");
+		if (square == null) {
+			throw new IllegalArgumentException("Square cannot be null");
+		}
+		if (direction == null) {
+			throw new IllegalArgumentException("Direction cannot be null");
 		}
 
 		this.square = square;
