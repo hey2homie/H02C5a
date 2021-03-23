@@ -18,6 +18,8 @@ public class MazeMap {
 	 * @invar | width > 0
 	 * @invar | height > 0
 	 * @invar | passable.length == width * height
+	 *
+	 * @representationObject
 	 */
 	private final int width;
 	private final int height;
@@ -76,8 +78,7 @@ public class MazeMap {
 			throw new IllegalArgumentException("Column index is wrong");
 		}
 
-		boolean result = getPassable()[rowIndex * width + columnIndex];
-		return result;
+		return getPassable()[rowIndex * width + columnIndex];
 	}
 
 	/**

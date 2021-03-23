@@ -14,6 +14,10 @@ import java.util.Random;
  */
 public class Ghost {
 
+	/**
+	 * @invar | square != null
+	 * @invar | direction != null
+	 */
 	private Square square;
 	private Direction direction;
 

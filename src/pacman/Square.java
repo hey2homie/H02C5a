@@ -114,8 +114,7 @@ public class Square {
 	 * @post | result.getMazeMap() == mazeMap && result.getRowIndex() == rowIndex && result.getColumnIndex() == columnIndex
 	 */
 	public static Square of(MazeMap mazeMap, int rowIndex, int columnIndex) {
-		Square result = new Square(mazeMap, rowIndex, columnIndex);
-		return result;
+		return new Square(mazeMap, rowIndex, columnIndex);
 	}
 
 	/**
@@ -207,8 +206,7 @@ public class Square {
 			throw new IllegalArgumentException("Square cannot be null");
 		}
 
-		boolean result = other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex()
+		return other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex()
 				&& other.getColumnIndex() == getColumnIndex();
-		return result;
 	}
 }
