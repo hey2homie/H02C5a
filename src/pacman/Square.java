@@ -199,7 +199,7 @@ public class Square {
 	 * @throws IllegalArgumentException if this method's parameter is null.
 	 * 		| other == null
 	 *
-	 * @post | other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex() && other.getColumnIndex() == getColumnIndex()
+	 * @post | result == (other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex() && other.getColumnIndex() == getColumnIndex())
 	 */
 	public boolean equals(Square other) {
 		if (other == null) {
