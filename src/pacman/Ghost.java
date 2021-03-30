@@ -105,8 +105,7 @@ public class Ghost {
 	}
 	
 	private static int MOVE_FORWARD_PREFERENCE = 10;
-	
-	// No formal document required
+
 	public Direction chooseNextMoveDirection(Random random) {
 		int moveForwardPreference = getSquare().canMove(getDirection()) ? MOVE_FORWARD_PREFERENCE : 0;
 		Direction[] passableDirections = getSquare().getPassableDirectionsExcept(getDirection().getOpposite());
@@ -117,8 +116,7 @@ public class Ghost {
 			return getDirection();
 		return passableDirections[result - moveForwardPreference];
 	}
-	
-	// No formal document required
+
 	public void move(Random random) {
 		setDirection(chooseNextMoveDirection(random));
 		setSquare(getSquare().getNeighbor(getDirection()));

@@ -80,7 +80,7 @@ public class PacMan {
 	 */
 	public void setSquare(Square square) {
 		if (square == null) {
-			throw new IllegalArgumentException("Square is null");
+			throw new IllegalArgumentException("Square cannot be null");
 		}
 
 		this.square = square;

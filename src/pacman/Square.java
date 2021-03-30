@@ -138,9 +138,11 @@ public class Square {
 	 * Returns this square's neighbor in the given direction. If this square has no neighbor in the given direction,
 	 * return the square that is furthest away in the opposite direction.
 	 */
-	// No formal documentation required
 	public Square getNeighbor(Direction direction) {
-		// Implementation hint: use method java.lang.Math.floorMod.
+		if (direction == null) {
+			throw new IllegalArgumentException("Direction cannot be null");
+		}
+
 		Square square = null;
 
 		switch (direction) {
@@ -175,14 +177,16 @@ public class Square {
 		}
 
 		return square;
-
 	}
 
 	/**
 	 * Returns whether this square's neighbor in the given direction is passable.
 	 */
-	// No formal documentation required
 	public boolean canMove(Direction direction) {
+		if (direction == null) {
+			throw new IllegalArgumentException("Direction cannot be null");
+		}
+
 		return getNeighbor(direction).isPassable();
 	}
 
@@ -190,9 +194,12 @@ public class Square {
 	 * Returns the directions that are different from the given excluded direction and such that the neighbor in that
 	 * direction is passable. The returned array shall have no null elements and shall have no duplicates.
 	 */
-	// No formal documentation required
 	public Direction[] getPassableDirectionsExcept(Direction excludedDirection) {
-		List<Direction> directions = new ArrayList<Direction>();	// So we can dynamically add values (not fixed size)
+		if (excludedDirection == null) {
+			throw new IllegalArgumentException("Direction cannot be null");
+		}
+
+		List<Direction> directions = new ArrayList<>();
 
 		for (Direction direction : Direction.values()) {
 			if (direction != excludedDirection && canMove(direction)) {
@@ -200,7 +207,7 @@ public class Square {
 			}
 		}
 
-		return directions.toArray(new Direction[0]);	// Convert to required data type
+		return directions.toArray(new Direction[0]);
 	}
 
 	/**
