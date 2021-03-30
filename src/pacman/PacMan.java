@@ -89,7 +89,8 @@ public class PacMan {
 	/**
 	 * Decreases this Pac-Man character's number of lives by one.
 	 *
-	 * @pre | getNbLives() > 0
+	 * @throws IllegalArgumentException if the number of lives is less than or equal to 0
+	 * 			| getNbLives() <= 0
 	 *
 	 * @mutates | this
 	 *
@@ -97,6 +98,9 @@ public class PacMan {
 	 * 		| getNbLives() == old(getNbLives()) - 1
 	 */
 	public void die() {
+		if(getNbLives() <= 0)
+			throw new IllegalArgumentException("The number of lives is already (less than) zero.");
+		
 		this.nbLives -= 1;
 	}
 }
