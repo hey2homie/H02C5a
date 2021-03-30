@@ -97,6 +97,8 @@ public class PacMan {
 	 * 		| getNbLives() == old(getNbLives()) - 1
 	 */
 	public void die() {
-		this.nbLives -= 1;
+		if (nbLives > 0) {
+			this.nbLives -= 1;
+		}
 	}
 }
