@@ -112,11 +112,11 @@ public class Square {
 	 * @creates | result
 	 *
 	 * @throws IllegalArgumentException if map is null.
-	 * 		| map == null
+	 * 		| mazeMap == null
 	 * @throws IllegalArgumentException if row index is incorrect with regard to maze height or less than zero.
-	 * 		| rowIndex < 0 || rowIndex > map.getHeight() - 1
+	 * 		| rowIndex < 0 || rowIndex > mazeMap.getHeight() - 1
 	 * @throws IllegalArgumentException if column index is incorrect with regard to maze width or less than zero.
-	 * 		| columnIndex < 0 || columnIndex > map.getWidth() - 1
+	 * 		| columnIndex < 0 || columnIndex > mazeMap.getWidth() - 1
 	 *
 	 * @post | result.getMazeMap() == mazeMap && result.getRowIndex() == rowIndex && result.getColumnIndex() == columnIndex
 	 */
