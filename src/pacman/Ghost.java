@@ -18,8 +18,10 @@ public class Ghost {
 	 * @invar | square != null
 	 * @invar | direction != null
 	 */
+	// TODO: Each instance keeps of ghost class has a ghost state, which is initially a regular ghost state.
 	private Square square;
 	private Direction direction;
+	private GhostState ghostState;
 
 	/**
 	 * Returns location of this ghost.
@@ -29,7 +31,7 @@ public class Ghost {
 	public Square getSquare() {
 		return square;
 	}
-	
+
 	/**
 	 * Returns the direction in which this ghost will preferably move next.
 	 *
@@ -103,10 +105,19 @@ public class Ghost {
 
 		this.direction = direction;
 	}
-	
-	private static int MOVE_FORWARD_PREFERENCE = 10;
+
+	// TODO: Implement method
+	public boolean isVulnerable() {
+		throw new IllegalArgumentException("Not yet implemented");
+	}
+
+	// TODO: Implement method
+	public void pacManAtePowerPellet() {
+		throw new IllegalArgumentException("Not yet implemented");
+	}
 
 	public Direction chooseNextMoveDirection(Random random) {
+		int MOVE_FORWARD_PREFERENCE = 10;
 		int moveForwardPreference = getSquare().canMove(getDirection()) ? MOVE_FORWARD_PREFERENCE : 0;
 		Direction[] passableDirections = getSquare().getPassableDirectionsExcept(getDirection().getOpposite());
 		if (passableDirections.length == 0)
