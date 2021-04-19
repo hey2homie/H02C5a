@@ -9,14 +9,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.Random;
-import java.util.function.Supplier;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import pacman.Direction;
-import pacman.Dot;
+import pacman.FoodItem;
 import pacman.Ghost;
 import pacman.Maze;
 import pacman.MazeDescriptions;
@@ -24,9 +23,9 @@ import pacman.MazeMap;
 
 public class MazeView extends JPanel {
 	
-	private static int squareSize = 30;
-	private static int lifeSize = squareSize;
-	private static int lifeMargin = 1;
+	private static final int squareSize = 30;
+	private static final int lifeSize = squareSize;
+	private static final int lifeMargin = 1;
 	private static int dotRadius = squareSize / 10;
 	private static int ghostMoveDelayMillis = 1000;
 
@@ -35,8 +34,9 @@ public class MazeView extends JPanel {
 		Image image = Toolkit.getDefaultToolkit().getImage(url);
 		return image.getScaledInstance(squareSize, squareSize, Image.SCALE_SMOOTH);
 	}
-	private static Image pacManImage = loadSquareImage("PacMan.png");
-	private static Image ghostImage = loadSquareImage("ghost.png");
+	private static final Image pacManImage = loadSquareImage("PacMan.png");
+	private static final Image ghostImage = loadSquareImage("ghost.png");
+	private static final Image vulnerableGhostImage = loadSquareImage("Vulnerable-ghost.png");
 	
 	private Maze maze;
 	private MazeMap map;
@@ -68,24 +68,24 @@ public class MazeView extends JPanel {
 				#####################
 				#.........#.........#
 				#.###.###.#.###.###.#
-				#.###.###.#.###.###.#
+				#p###.###.#.###.###p#
 				#.###.###.#.###.###.#
 				#...................#
 				#.###.#.#####.#.###.#
 				#.###.#.#####.#.###.#
 				#.....#...#...#.....#
 				#####.### # ###.#####
-				    #.#   G   #.#    
+				    #.#   G   #.#   
 				    #.# #   # #.#    
 				#####.# #   # #.#####
 				     .  #GGG#  .     
 				#####.# ##### #.#####
 				    #.#       #.#    
-				    # # ##### #.#    
+				    #.# ##### #.#    
 				#####.# ##### #.#####
 				#.........#.........#
 				#.###.###.#.###.###.#
-				#...#.....P.....#...#
+				#p..#.....P.....#..p#
 				###.#.#.#####.#.#.###
 				###.#.#.#####.#.#.###
 				#.....#...#...#.....#
@@ -141,19 +141,21 @@ public class MazeView extends JPanel {
 				if (!map.isPassable(row, column))
 					g.fillRect(squareSize * column, squareSize * row, squareSize, squareSize);
 		
-		// Dots
+		// Food items
 		g.setColor(Color.yellow);
-		for (Dot dot : maze.getDots())
+		for (FoodItem foodItem : maze.getFoodItems()) {
+			int foodItemRadius = foodItem.getSize() * dotRadius;
 			g.fillOval(
-					dot.getSquare().getColumnIndex() * squareSize + squareSize / 2 - dotRadius,
-					dot.getSquare().getRowIndex() * squareSize + squareSize / 2 - dotRadius,
-					2 * dotRadius,
-					2 * dotRadius);
+					foodItem.getSquare().getColumnIndex() * squareSize + squareSize / 2 - foodItemRadius,
+					foodItem.getSquare().getRowIndex() * squareSize + squareSize / 2 - foodItemRadius,
+					2 * foodItemRadius,
+					2 * foodItemRadius);
+		}
 		
 		// Ghosts
 		for (Ghost ghost : maze.getGhosts())
 			g.drawImage(
-					ghostImage,
+					ghost.isVulnerable() ? vulnerableGhostImage : ghostImage,
 					ghost.getSquare().getColumnIndex() * squareSize,
 					ghost.getSquare().getRowIndex() * squareSize,
 					this);
