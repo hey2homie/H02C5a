@@ -14,15 +14,14 @@ public class MazeDescriptions {
 		int width = lines[0].length();
 		
 		boolean[] passable = new boolean[height * width];
-		for (int i = 0; i < passable.length; i++)
-			passable[i] = true;
-		
-		int nbDots = 0;
-		Dot[] dots = new Dot[width * height];
-		
+		Arrays.fill(passable, true);
+
 		int nbGhosts = 0;
 		Ghost[] ghosts = new Ghost[width * height];
-		
+
+		int nbFoodItems = 0;
+		FoodItem[] foodItems = new FoodItem[width * height];
+
 		for (int row = 0; row < lines.length; row++) {
 			String line = lines[row];
 			for (int column = 0; column < line.length(); column++) {
@@ -39,9 +38,9 @@ public class MazeDescriptions {
 			for (int column = 0; column < line.length(); column++) {
 				char c = line.charAt(column);
 				switch (c) {
-				case ' ' -> {}
-				case '#' -> {}
-				case '.' -> dots[nbDots++] = new Dot(Square.of(map, row, column));
+				case ' ', '#' -> {}
+				case '.' -> foodItems[nbFoodItems++] = new Dot(Square.of(map, row, column));
+				case 'p' -> foodItems[nbFoodItems++] = new PowerPellet(Square.of(map, row, column));
 				case 'G' -> ghosts[nbGhosts++] = new Ghost(Square.of(map, row, column), Direction.values()[random.nextInt(Direction.values().length)]);
 				case 'P' -> {
 					if (pacMan != null)
@@ -53,10 +52,12 @@ public class MazeDescriptions {
 			}
 		}
 		
-		if (pacMan == null)
+		if (pacMan == null) {
 			throw new IllegalArgumentException("Maze description does not contain a P character");
-		
-		return new Maze(random, map, pacMan, Arrays.copyOf(ghosts, nbGhosts), Arrays.copyOf(dots, nbDots));
+		}
+
+		return new Maze(random, map, pacMan, Arrays.copyOf(ghosts, nbGhosts), Arrays.copyOf(foodItems, nbFoodItems));
 	}
+
 
 }
