@@ -41,7 +41,7 @@ public class Maze {
 	private void checkPacManDamage() {
 		for (Ghost ghost : ghosts)
 			if (ghost.getSquare().equals(pacMan.getSquare()))
-				pacMan.die();
+				ghost.hitBy(pacMan);
 	}
 
 	public void moveGhosts() {
@@ -57,34 +57,25 @@ public class Maze {
 		foodItems = newFoodItems;
 	}
 
+	// TODO: Change use of instanceof to dynamical binding
 	private void removeFoodItemAtSquare(Square square) {
 		for (int i = 0; i < foodItems.length; i++) {
 			if (foodItems[i].getSquare().equals(square)) {
+				if (foodItems[i] instanceof PowerPellet) {
+					for (Ghost ghost : ghosts) {
+						ghost.pacManAtePowerPellet();
+					}
+				}
 				removeFoodItemAtIndex(i);
 				return;
 			}
 		}
 	}
 
-	// TODO: Move from instanceof to dynamic binding
-	private boolean isPowerPellet(Square square) {
-		for (FoodItem foodItem : foodItems) {
-			if (foodItem.getSquare().equals(square) && foodItem instanceof PowerPellet) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public void movePacMan(Direction direction) {
 		Square newSquare = pacMan.getSquare().getNeighbor(direction);
 		if (newSquare.isPassable()) {
 			pacMan.setSquare(newSquare);
-			if (isPowerPellet(newSquare)) {
-				// TODO: Implement change of ghost state
-				throw new IllegalArgumentException("Not yet implemented");
-			}
 			removeFoodItemAtSquare(newSquare);
 			checkPacManDamage();
 		}
