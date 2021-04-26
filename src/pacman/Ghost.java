@@ -18,10 +18,10 @@ public class Ghost {
 	 * @invar | square != null
 	 * @invar | direction != null
 	 */
-	// TODO: Each instance keeps of ghost class has a ghost state, which is initially a regular ghost state.
 	private Square square;
 	private Direction direction;
 	private GhostState ghostState;
+	private final Square originalSquare;
 
 	/**
 	 * Returns location of this ghost.
@@ -39,6 +39,15 @@ public class Ghost {
 	 */
 	public Direction getDirection() {
 		return direction;
+	}
+
+	/**
+	 * Returns initial square on which ghost is located.
+	 *
+	 * @basic
+	 */
+	public Square getOriginalSquare() {
+		return originalSquare;
 	}
 
 	/**
@@ -65,6 +74,8 @@ public class Ghost {
 
 		this.square = square;
 		this.direction = direction;
+		this.ghostState = new RegularGhostState();
+		this.originalSquare = square;
 	}
 
 	/**
@@ -100,20 +111,59 @@ public class Ghost {
 	 */
 	public void setDirection(Direction direction) {
 		if (direction == null) {
-			throw new IllegalArgumentException("Wrong parameters");
+			throw new IllegalArgumentException("Wrong parameter");
 		}
 
 		this.direction = direction;
 	}
 
-	// TODO: Implement method
-	public boolean isVulnerable() {
-		throw new IllegalArgumentException("Not yet implemented");
+	/**
+	 * Set's this object state.
+	 *
+	 * @mutates | this
+	 *
+	 * @throws IllegalArgumentException if method's argument is null.
+	 */
+	public void setGhostState(GhostState ghostState) {
+		if (ghostState == null) {
+			throw new IllegalArgumentException("Wrong parameter");
+		}
+
+		this.ghostState = ghostState;
 	}
 
-	// TODO: Implement method
+	/**
+	 * Returns boolean value depending on the ghost state: true if ghost in vulnerable state or false otherwise.
+	 */
+	public boolean isVulnerable() {
+		// TODO: Change use of instanceof to dynamical binding
+		return ghostState instanceof VulnerableGhostState;
+	}
+
+	/**
+	 * This method is called when PacMan ate power pellet resulting in changing ghost state to vulnerable state and
+	 * reversing the direction of movement.
+	 *
+	 * @mutates | this
+	 */
 	public void pacManAtePowerPellet() {
-		throw new IllegalArgumentException("Not yet implemented");
+		setGhostState(new VulnerableGhostState());
+
+		switch (this.direction) {
+			case LEFT -> this.direction = Direction.RIGHT;
+			case RIGHT -> this.direction = Direction.LEFT;
+			case DOWN -> this.direction = Direction.UP;
+			case UP -> this.direction = Direction.DOWN;
+		}
+	}
+
+	/**
+	 * This method is called upon ghost's collision with PacMan. Depending on the state of ghost PacMan either looses a
+	 * health, or PacMan eats ghost resulting in ghost changing state to regular state and spawning again at the
+	 * original square.
+	 */
+	public void hitBy(PacMan pacMan) {
+		setGhostState(ghostState.hitBy(this, pacMan));
 	}
 
 	public Direction chooseNextMoveDirection(Random random) {
@@ -128,8 +178,12 @@ public class Ghost {
 		return passableDirections[result - moveForwardPreference];
 	}
 
-	public void move(Random random) {
+	public void reallyMove(Random random) {
 		setDirection(chooseNextMoveDirection(random));
 		setSquare(getSquare().getNeighbor(getDirection()));
+	}
+
+	public void move(Random random) {
+		reallyMove(random);
 	}
 }
