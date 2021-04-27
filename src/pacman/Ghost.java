@@ -22,6 +22,7 @@ public class Ghost {
 	private Direction direction;
 	private GhostState ghostState;
 	private final Square originalSquare;
+	private int delay = 0;
 
 	/**
 	 * Returns location of this ghost.
@@ -48,6 +49,15 @@ public class Ghost {
 	 */
 	public Square getOriginalSquare() {
 		return originalSquare;
+	}
+
+	/**
+	 * Returns this object's delay.
+	 *
+	 * @basic
+	 */
+	public int getDelay() {
+		return delay;
 	}
 
 	/**
@@ -99,7 +109,7 @@ public class Ghost {
 	}
 
 	/**
-	 * Set's this object's direction.
+	 * Set this object's direction.
 	 *
 	 * @pre | direction != null
 	 *
@@ -118,7 +128,7 @@ public class Ghost {
 	}
 
 	/**
-	 * Set's this object state.
+	 * Set this object state.
 	 *
 	 * @mutates | this
 	 *
@@ -133,11 +143,38 @@ public class Ghost {
 	}
 
 	/**
+	 * Sets this object delay.
+	 *
+	 * @mutates | this
+	 *
+	 * @throws IllegalArgumentException if method's argument is less than zero.
+	 *
+	 * @post | getDelay() == delay
+	 */
+	public void setDelay(int delay) {
+		if (delay < 0) {
+			throw new IllegalArgumentException("Wrong parameter");
+		}
+
+		this.delay = delay;
+	}
+
+	/**
+	 * Increases this object delay by one.
+	 *
+	 * @mutates | this
+	 *
+	 * @post | getDelay() == old(getDelay()) + 1
+	 */
+	public void increaseDelay() {
+		this.delay++;
+	}
+
+	/**
 	 * Returns boolean value depending on the ghost state: true if ghost in vulnerable state or false otherwise.
 	 */
 	public boolean isVulnerable() {
-		// TODO: Change use of instanceof to dynamical binding
-		return ghostState instanceof VulnerableGhostState;
+		return ghostState.isVulnerable();
 	}
 
 	/**
@@ -184,6 +221,6 @@ public class Ghost {
 	}
 
 	public void move(Random random) {
-		reallyMove(random);
+		setGhostState(ghostState.move(this, random));
 	}
 }
