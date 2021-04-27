@@ -3,7 +3,7 @@ package pacman;
 /**
  * @mutable
  */
-public class FoodItem {
+public abstract class FoodItem {
 
     /**
      * @invar | square != null
@@ -63,4 +63,6 @@ public class FoodItem {
 
         this.size = size;
     }
+
+    public abstract boolean isPowerPellet();
 }

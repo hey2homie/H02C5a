@@ -57,11 +57,10 @@ public class Maze {
 		foodItems = newFoodItems;
 	}
 
-	// TODO: Change use of instanceof to dynamical binding
 	private void removeFoodItemAtSquare(Square square) {
 		for (int i = 0; i < foodItems.length; i++) {
 			if (foodItems[i].getSquare().equals(square)) {
-				if (foodItems[i] instanceof PowerPellet) {
+				if (foodItems[i].isPowerPellet()) {
 					for (Ghost ghost : ghosts) {
 						ghost.pacManAtePowerPellet();
 					}
