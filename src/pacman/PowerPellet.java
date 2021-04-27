@@ -11,6 +11,4 @@ public class PowerPellet extends FoodItem {
     public boolean isPowerPellet() {
         return true;
     }
-
-
 }

@@ -6,11 +6,12 @@ public class VulnerableGhostState extends GhostState {
 
     @Override
     public GhostState move(Ghost ghost, Random random) {
-        if (ghost.getDelay() % 2 == 1) {
+        if (ghost.getDelay() % 2 == 0) {
             ghost.reallyMove(random);
         }
-        if (ghost.getDelay() == 12) {
-            ghost.setDelay(0);
+        if (ghost.getDelay() == 13) {
+            ghost.setDelay(1);
+            ghost.reallyMove(random);
             return new RegularGhostState();
         }
 
@@ -21,6 +22,7 @@ public class VulnerableGhostState extends GhostState {
 
     @Override
     public GhostState hitBy(Ghost ghost, PacMan pacMan) {
+        ghost.setDelay(1);
         ghost.setSquare(ghost.getOriginalSquare());
         return new RegularGhostState();
     }

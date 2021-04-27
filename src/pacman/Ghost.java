@@ -22,7 +22,7 @@ public class Ghost {
 	private Direction direction;
 	private GhostState ghostState;
 	private final Square originalSquare;
-	private int delay = 0;
+	private int delay = 1;
 
 	/**
 	 * Returns location of this ghost.
@@ -214,7 +214,7 @@ public class Ghost {
 			return getDirection();
 		return passableDirections[result - moveForwardPreference];
 	}
-
+	
 	public void reallyMove(Random random) {
 		setDirection(chooseNextMoveDirection(random));
 		setSquare(getSquare().getNeighbor(getDirection()));
