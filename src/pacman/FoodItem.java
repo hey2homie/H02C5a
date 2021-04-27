@@ -10,7 +10,7 @@ public abstract class FoodItem {
      * @invar | size > 0
      */
     private final Square square;
-    private int size;
+    protected int size;
 
     /**
      * Returns object of Square class.
@@ -22,7 +22,7 @@ public abstract class FoodItem {
     }
 
     /**
-     * Returns this object Size
+     * Returns this object size.
      *
      * @basic
      */
@@ -40,28 +40,11 @@ public abstract class FoodItem {
      *
      * @post | getSquare() == square
      */
-
     public FoodItem(Square square) {
         if (square == null) {
             throw new IllegalArgumentException("Square cannot be null");
         }
-        this.size = 1;
         this.square = square;
-    }
-
-    /**
-     * @pre | size > 0
-     *
-     * @throws IllegalArgumentException | size < 1
-     *
-     * post | getSize() == size
-     */
-    public void setSize(int size) {
-        if (size < 1) {
-            throw new IllegalArgumentException("Size cannot be less than 1");
-        }
-
-        this.size = size;
     }
 
     public abstract boolean isPowerPellet();

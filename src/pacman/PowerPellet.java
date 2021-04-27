@@ -4,7 +4,7 @@ public class PowerPellet extends FoodItem {
 
     public PowerPellet(Square square) {
         super(square);
-        setSize(getSize() * 2);
+        this.size = 2;
     }
 
     @Override
