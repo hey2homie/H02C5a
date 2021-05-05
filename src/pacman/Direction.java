@@ -1,6 +1,7 @@
 package pacman;
 
 public enum Direction {
+	
 	RIGHT, DOWN, LEFT, UP;
 	
 	public Direction getOpposite() {

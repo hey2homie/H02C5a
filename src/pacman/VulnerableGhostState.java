@@ -9,9 +9,8 @@ public class VulnerableGhostState extends GhostState {
         if (ghost.getDelay() % 2 == 0) {
             ghost.reallyMove(random);
         }
-        if (ghost.getDelay() == 13) {
+        if (ghost.getDelay() == 12) {
             ghost.setDelay(1);
-            ghost.reallyMove(random);
             return new RegularGhostState();
         }
 

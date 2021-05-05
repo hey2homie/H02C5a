@@ -58,6 +58,4 @@ public class MazeDescriptions {
 
 		return new Maze(random, map, pacMan, Arrays.copyOf(ghosts, nbGhosts), Arrays.copyOf(foodItems, nbFoodItems));
 	}
-
-
 }

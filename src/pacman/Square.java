@@ -1,6 +1,7 @@
 package pacman;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,8 +21,8 @@ public class Square {
 
 	/**
 	 * @invar | map != null
-	 * @invar | rowIndex >= 0 || rowIndex < map.getHeight()
-	 * @invar | columnIndex >= 0 || columnIndex < map.getWidth()
+	 * @invar | rowIndex >= 0 && rowIndex < map.getHeight()
+	 * @invar | columnIndex >= 0 && columnIndex < map.getWidth()
 	 */
 	private final MazeMap map;
 	private final int rowIndex;
@@ -68,10 +69,6 @@ public class Square {
 	 * Initializes this object so that it represents a maze square at given rowIndex, columnIndex, and whether square is
 	 * passable or not.
 	 *
-	 * @pre | map != null
-	 * @pre | rowIndex >= 0 && rowIndex <= map.getHeight() - 1
-	 * @pre | columnIndex >= 0 && columnIndex <= map.getWidth() - 1
-	 *
 	 * @throws IllegalArgumentException if map is null.
 	 * 		| map == null
 	 * @throws IllegalArgumentException if row index is incorrect with regard to maze height or less than zero.
@@ -105,10 +102,6 @@ public class Square {
 	 * Returns newly created instance of Square class, which represents square of the maze at given rowIndex,
 	 * columnIndex, and includes MazeMap instance.
 	 *
-	 * @pre | mazeMap != null
-	 * @pre | rowIndex >= 0 && rowIndex <= mazeMap.getHeight() - 1
-	 * @pre | columnIndex >= 0 && columnIndex <= mazeMap.getWidth() - 1
-	 *
 	 * @creates | result
 	 *
 	 * @throws IllegalArgumentException if map is null.
@@ -119,18 +112,9 @@ public class Square {
 	 * 		| columnIndex < 0 || columnIndex > mazeMap.getWidth() - 1
 	 *
 	 * @post | result.getMazeMap() == mazeMap && result.getRowIndex() == rowIndex && result.getColumnIndex() == columnIndex
+	 * @post | result != null
 	 */
 	public static Square of(MazeMap mazeMap, int rowIndex, int columnIndex) {
-		if (mazeMap == null) {
-			throw new IllegalArgumentException("Map is null");
-		}
-		if (rowIndex < 0 || rowIndex > mazeMap.getHeight() - 1) {
-			throw new IllegalArgumentException("Row index cannot be less than zero and more then maze's height - 1");
-		}
-		if (columnIndex < 0 || columnIndex > mazeMap.getWidth() - 1) {
-			throw new IllegalArgumentException("Column index cannot be less than zero and more then maze's width - 1");
-		}
-
 		return new Square(mazeMap, rowIndex, columnIndex);
 	}
 
@@ -207,23 +191,20 @@ public class Square {
 			}
 		}
 
-		return directions.toArray(new Direction[0]);
+		return Arrays.copyOf(directions.toArray(new Direction[0]), directions.size());
 	}
 
 	/**
 	 * Returns whether the given square refers to the same {@code MazeMap} object and has the same row and column index
 	 * as this square.
 	 *
-	 * @pre | other != null
-	 *
-	 * @inspects | other
-	 *
-	 * @creates | result
-	 *
-	 * @throws IllegalArgumentException if this method's parameter is null.
-	 * 		| other == null
-	 *
-	 * @post | result == (other.getMazeMap() == getMazeMap() && other.getRowIndex() == getRowIndex() && other.getColumnIndex() == getColumnIndex())
+	 * @throws IllegalArgumentException | other == null
+	 * 
+	 * @post | result == (
+	 *       |     getMazeMap() == other.getMazeMap() &&
+	 *       |     getRowIndex() == other.getRowIndex() &&
+	 *       |     getColumnIndex() == other.getColumnIndex()
+	 *       | ) 
 	 */
 	public boolean equals(Square other) {
 		if (other == null) {

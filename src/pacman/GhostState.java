@@ -9,5 +9,4 @@ public abstract class GhostState {
     public abstract GhostState hitBy(Ghost ghost, PacMan pacMan);
 
     public abstract boolean isVulnerable();
-
 }

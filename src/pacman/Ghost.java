@@ -42,29 +42,16 @@ public class Ghost {
 		return direction;
 	}
 
-	/**
-	 * Returns initial square on which ghost is located.
-	 *
-	 * @basic
-	 */
 	public Square getOriginalSquare() {
 		return originalSquare;
 	}
 
-	/**
-	 * Returns this object's delay.
-	 *
-	 * @basic
-	 */
 	public int getDelay() {
 		return delay;
 	}
 
 	/**
 	 * Initializes this object so that it represents a ghost in the maze at the given square with the initial direction.
-	 *
-	 * @pre | square != null
-	 * @pre | direction != null
 	 *
 	 * @throws IllegalArgumentException if given square is null.
 	 * 		| square == null
@@ -91,14 +78,13 @@ public class Ghost {
 	/**
 	 * Sets this object's square.
 	 *
-	 * @pre | square != null
-	 *
-	 * @mutates | this
-	 *
 	 * @throws IllegalArgumentException if method's argument is null.
 	 * 		| square == null
 	 *
+ 	 * @mutates | this
+ 	 * 
 	 * @post | getSquare() == square
+	 * @post | getDirection() == old(getDirection())
 	 */
 	public void setSquare(Square square) {
 		if (square == null) {
@@ -111,13 +97,13 @@ public class Ghost {
 	/**
 	 * Set this object's direction.
 	 *
-	 * @pre | direction != null
-	 *
-	 * @mutates | this
-	 *
 	 * @throws IllegalArgumentException if method's argument is null.
-	 *
+	 * 		| direction == null
+	 * 
+ 	 * @mutates | this
+ 	 * 
 	 * @post | getDirection() == direction
+	 * @post | getSquare() == old(getSquare())
 	 */
 	public void setDirection(Direction direction) {
 		if (direction == null) {
@@ -127,13 +113,6 @@ public class Ghost {
 		this.direction = direction;
 	}
 
-	/**
-	 * Set this object state.
-	 *
-	 * @mutates | this
-	 *
-	 * @throws IllegalArgumentException if method's argument is null.
-	 */
 	public void setGhostState(GhostState ghostState) {
 		if (ghostState == null) {
 			throw new IllegalArgumentException("Wrong parameter");
@@ -142,15 +121,6 @@ public class Ghost {
 		this.ghostState = ghostState;
 	}
 
-	/**
-	 * Sets this object delay.
-	 *
-	 * @mutates | this
-	 *
-	 * @throws IllegalArgumentException if method's argument is less than zero.
-	 *
-	 * @post | getDelay() == delay
-	 */
 	public void setDelay(int delay) {
 		if (delay < 0) {
 			throw new IllegalArgumentException("Wrong parameter");
@@ -159,46 +129,19 @@ public class Ghost {
 		this.delay = delay;
 	}
 
-	/**
-	 * Increases this object delay by one.
-	 *
-	 * @mutates | this
-	 *
-	 * @post | getDelay() == old(getDelay()) + 1
-	 */
 	public void increaseDelay() {
 		this.delay++;
 	}
 
-	/**
-	 * Returns boolean value depending on the ghost state: true if ghost in vulnerable state or false otherwise.
-	 */
 	public boolean isVulnerable() {
 		return ghostState.isVulnerable();
 	}
 
-	/**
-	 * This method is called when PacMan ate power pellet resulting in changing ghost state to vulnerable state and
-	 * reversing the direction of movement.
-	 *
-	 * @mutates | this
-	 */
 	public void pacManAtePowerPellet() {
 		setGhostState(new VulnerableGhostState());
-
-		switch (this.direction) {
-			case LEFT -> this.direction = Direction.RIGHT;
-			case RIGHT -> this.direction = Direction.LEFT;
-			case DOWN -> this.direction = Direction.UP;
-			case UP -> this.direction = Direction.DOWN;
-		}
+		direction = direction.getOpposite();
 	}
 
-	/**
-	 * This method is called upon ghost's collision with PacMan. Depending on the state of ghost PacMan either looses a
-	 * health, or PacMan eats ghost resulting in ghost changing state to regular state and spawning again at the
-	 * original square.
-	 */
 	public void hitBy(PacMan pacMan) {
 		setGhostState(ghostState.hitBy(this, pacMan));
 	}

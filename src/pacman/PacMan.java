@@ -41,11 +41,8 @@ public class PacMan {
 	 * Initializes this object so that it represents a PacMan at the given square of the maze. Number of lives cannot
 	 * be less than 1 because it'll result in immediate end of the game.
 	 *
-	 * @pre | nbLives >= 1
-	 * @pre | square != null
-	 *
 	 * @throws IllegalArgumentException if method's nbLives parameter is less then 1.
-	 * 		| nbLives < 1
+	 * 		| nbLives < 0
 	 * @throws IllegalArgumentException if method's square parameter is null.
 	 * 		| square == null
 	 *
@@ -55,7 +52,7 @@ public class PacMan {
 	 * 		| getSquare() == square
 	 */
 	public PacMan(int nbLives, Square square) {
-		if (nbLives < 1) {
+		if (nbLives < 0) {
 			throw new IllegalArgumentException("Number of lives cannot be less than 1");
 		}
 		if (square == null) {
@@ -69,14 +66,13 @@ public class PacMan {
 	/**
 	 * Sets this object square.
 	 *
-	 * @pre | square != null
-	 *
 	 * @throws IllegalArgumentException if given square equals null.
 	 * 		| square == null
 	 *
 	 * @mutates | this
 	 *
 	 * @post | getSquare() == square
+ 	 * @post | getNbLives() == old(getNbLives()) 
 	 */
 	public void setSquare(Square square) {
 		if (square == null) {
@@ -89,16 +85,20 @@ public class PacMan {
 	/**
 	 * Decreases this Pac-Man character's number of lives by one.
 	 *
-	 * @pre | getNbLives() > 0
 	 *
+	 * @throws IllegalArgumentException if number of lives is less than one
+	 * 		| getNbLives() == 0
+	 * 
 	 * @mutates | this
-	 *
-	 * @post Number of lives is decreased by one. 
-	 * 		| getNbLives() == old(getNbLives()) - 1
+	 * 
+	 * @post | getNbLives() == old(getNbLives()) - 1
+	 * @post | getSquare() == old(getSquare())
 	 */
 	public void die() {
 		if (nbLives > 0) {
 			this.nbLives--;
+		} else {
+			throw new IllegalArgumentException("There are no lives left");
 		}
 	}
 }
