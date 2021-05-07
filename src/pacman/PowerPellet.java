@@ -4,11 +4,15 @@ public class PowerPellet extends FoodItem {
 
     public PowerPellet(Square square) {
         super(square);
-        this.size = 2;
     }
 
     @Override
     public boolean isPowerPellet() {
         return true;
+    }
+
+    @Override
+    public int getSize() {
+        return 2;
     }
 }

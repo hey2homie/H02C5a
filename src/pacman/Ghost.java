@@ -139,7 +139,7 @@ public class Ghost {
 
 	public void pacManAtePowerPellet() {
 		setGhostState(new VulnerableGhostState());
-		direction = direction.getOpposite();
+		this.direction = direction.getOpposite();
 	}
 
 	public void hitBy(PacMan pacMan) {
