@@ -1,5 +1,9 @@
 package pacman;
 
+import pacman.wormholes.ArrivalPortal;
+import pacman.wormholes.DeparturePortal;
+import pacman.wormholes.Wormhole;
+
 import java.util.Random;
 
 public class Maze {
@@ -9,6 +13,10 @@ public class Maze {
 	private final PacMan pacMan;
 	private final Ghost[] ghosts;
 	private FoodItem[] foodItems;
+	private final ArrivalPortal[] arrivalPortals;
+	private final DeparturePortal[] departurePortals;
+	private final Wormhole[] wormholes = new Wormhole[3];
+	private int nbWormholes = 0;
 
 	public MazeMap getMap() {
 		return map;
@@ -26,12 +34,27 @@ public class Maze {
 		return foodItems.clone();
 	}
 
-	public Maze(Random random, MazeMap map, PacMan pacMan, Ghost[] ghosts, FoodItem[] foodItems) {
+	public ArrivalPortal[] getArrivalPortals() {
+		return arrivalPortals.clone();
+	}
+
+	public DeparturePortal[] getDeparturePortals() {
+		return departurePortals.clone();
+	}
+
+	public Wormhole[] getWormholes() {
+		return wormholes;
+	}
+
+	public Maze(Random random, MazeMap map, PacMan pacMan, Ghost[] ghosts, FoodItem[] foodItems, ArrivalPortal[]
+			arrivalPortals, DeparturePortal[] departurePortals) {
 		this.random = random;
 		this.map = map;
 		this.pacMan = pacMan;
 		this.ghosts = ghosts.clone();
 		this.foodItems = foodItems.clone();
+		this.arrivalPortals = arrivalPortals.clone();
+		this.departurePortals = departurePortals.clone();
 	}
 
 	public boolean isCompleted() {
@@ -42,6 +65,12 @@ public class Maze {
 		for (Ghost ghost : ghosts)
 			if (ghost.getSquare().equals(pacMan.getSquare()))
 				ghost.hitBy(pacMan);
+	}
+
+	public void pacMamAtePowerPellet() {
+		for (Ghost ghost : ghosts) {
+			ghost.pacManAtePowerPellet();
+		}
 	}
 
 	public void moveGhosts() {
@@ -57,17 +86,11 @@ public class Maze {
 		foodItems = newFoodItems;
 	}
 
-	// TODO: Change use of instanceof to dynamical binding
 	private void removeFoodItemAtSquare(Square square) {
 		for (int i = 0; i < foodItems.length; i++) {
 			if (foodItems[i].getSquare().equals(square)) {
-				if (foodItems[i] instanceof PowerPellet) {
-					for (Ghost ghost : ghosts) {
-						ghost.pacManAtePowerPellet();
-					}
-				}
+				foodItems[i].isPowerPellet(this);
 				removeFoodItemAtIndex(i);
-				return;
 			}
 		}
 	}
@@ -75,9 +98,24 @@ public class Maze {
 	public void movePacMan(Direction direction) {
 		Square newSquare = pacMan.getSquare().getNeighbor(direction);
 		if (newSquare.isPassable()) {
-			pacMan.setSquare(newSquare);
+			pacMan.setSquare(checkForPortal(newSquare));
 			removeFoodItemAtSquare(newSquare);
 			checkPacManDamage();
 		}
+	}
+
+	public void addWormhole(Wormhole wormhole) {
+		wormholes[nbWormholes] = wormhole;
+		nbWormholes++;
+	}
+
+	private Square checkForPortal(Square square) {
+		for (Wormhole wormhole : wormholes) {
+			if (square.equals(wormhole.getDeparturePortal().getSquare())) {
+				return wormhole.getDeparturePortal().getRandomArrivalSquare();
+			}
+		}
+
+		return square;
 	}
 }
