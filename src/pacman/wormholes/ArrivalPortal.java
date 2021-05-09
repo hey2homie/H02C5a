@@ -1,17 +1,36 @@
 package pacman.wormholes;
 
 import pacman.Square;
-import java.util.HashSet;
 
+/**
+ * @invar | getSquare() != null
+ * 
+ * @immutable
+ */
 public class ArrivalPortal {
 
+    /**
+     * @invar | square != null
+     */
     private final Square square;
 
-    public ArrivalPortal(Square square) {
-        this.square = square;
-    }
-
+    /**
+     * @basic
+     */
     public Square getSquare() {
         return square;
+    }
+
+    /**
+     * @throws IllegalArgumentException | square == null
+     *
+     * @post | getSquare() == square
+     */
+    public ArrivalPortal(Square square) {
+        if (square == null) {
+            throw new IllegalArgumentException("Wrong parameter");
+        }
+
+        this.square = square;
     }
 }
