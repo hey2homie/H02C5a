@@ -22,7 +22,6 @@ public class Ghost {
 	private Direction direction;
 	private GhostState ghostState;
 	private final Square originalSquare;
-	private int delay = 1;
 
 	/**
 	 * Returns location of this ghost.
@@ -44,10 +43,6 @@ public class Ghost {
 
 	public Square getOriginalSquare() {
 		return originalSquare;
-	}
-
-	public int getDelay() {
-		return delay;
 	}
 
 	/**
@@ -121,25 +116,13 @@ public class Ghost {
 		this.ghostState = ghostState;
 	}
 
-	public void setDelay(int delay) {
-		if (delay < 0) {
-			throw new IllegalArgumentException("Wrong parameter");
-		}
-
-		this.delay = delay;
-	}
-
-	public void increaseDelay() {
-		this.delay++;
-	}
-
 	public boolean isVulnerable() {
 		return ghostState.isVulnerable();
 	}
 
 	public void pacManAtePowerPellet() {
 		setGhostState(new VulnerableGhostState());
-		this.direction = direction.getOpposite();
+		direction = direction.getOpposite();
 	}
 
 	public void hitBy(PacMan pacMan) {

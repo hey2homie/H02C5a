@@ -4,24 +4,31 @@ import java.util.Random;
 
 public class VulnerableGhostState extends GhostState {
 
+    public static final int VULNERABLE_TIME = 5;
+    public static final int MOVE_DELAY = 1;
+
+    private int vulnerableTimeLeft = VULNERABLE_TIME;
+    private int moveDelayLeft = MOVE_DELAY;
+
     @Override
     public GhostState move(Ghost ghost, Random random) {
-        if (ghost.getDelay() % 2 == 0) {
-            ghost.reallyMove(random);
+        if (moveDelayLeft > 0) {
+            moveDelayLeft--;
+            return this;
         }
-        if (ghost.getDelay() == 12) {
-            ghost.setDelay(1);
+
+        ghost.reallyMove(random);
+        moveDelayLeft = MOVE_DELAY;
+
+        if (vulnerableTimeLeft > 0) {
+            vulnerableTimeLeft--;
+            return this;
+        } else
             return new RegularGhostState();
-        }
-
-        ghost.increaseDelay();
-
-        return new VulnerableGhostState();
     }
 
     @Override
     public GhostState hitBy(Ghost ghost, PacMan pacMan) {
-        ghost.setDelay(1);
         ghost.setSquare(ghost.getOriginalSquare());
         return new RegularGhostState();
     }

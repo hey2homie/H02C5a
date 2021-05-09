@@ -1,10 +1,8 @@
 package pacman;
 
-
 public abstract class FoodItem {
 
     private final Square square;
-
 
     public Square getSquare() {
         return square;
