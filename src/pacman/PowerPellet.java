@@ -7,8 +7,8 @@ public class PowerPellet extends FoodItem {
     }
 
     @Override
-    public boolean isPowerPellet() {
-        return true;
+    public void isPowerPellet(Maze maze) {
+        maze.pacMamAtePowerPellet();
     }
 
     @Override

@@ -7,11 +7,6 @@ public class Dot extends FoodItem {
 	}
 
 	@Override
-	public boolean isPowerPellet() {
-		return false;
-	}
-
-	@Override
 	public int getSize() {
 		return 1;
 	}

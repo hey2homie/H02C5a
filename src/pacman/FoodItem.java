@@ -16,7 +16,7 @@ public abstract class FoodItem {
         this.square = square;
     }
 
-    public abstract boolean isPowerPellet();
+    public void isPowerPellet(Maze maze) {}
 
     public abstract int getSize();
 }
