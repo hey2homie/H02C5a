@@ -3,6 +3,7 @@ package pacman.wormholes;
 import pacman.Square;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @invar | getSquare() != null
@@ -31,8 +32,22 @@ public class DeparturePortal {
     /**
      * @basic
      */
-    public HashSet<Wormhole> getWormholes() {
-        return wormholes;
+    public Square getRandomArrivalSquare() {
+        if (wormholes.size() != 0) {
+            Wormhole[] arrayNumbers = wormholes.toArray(new Wormhole[0]);
+            return arrayNumbers[new Random().nextInt(wormholes.size())].getArrivalPortal().getSquare();
+        }
+        else {
+            return square;
+        }
+    }
+
+    /**
+     * @basic
+     * @peerObjects
+     */
+    public Set<Wormhole> getWormholes() {
+        return Set.copyOf(wormholes);
     }
 
     /**
@@ -48,20 +63,9 @@ public class DeparturePortal {
     }
 
     /**
-     * @basic
-     */
-    public Square getRandomArrivalSquare() {
-        if (wormholes.size() != 0) {
-            Wormhole[] arrayNumbers = wormholes.toArray(new Wormhole[0]);
-            return arrayNumbers[new Random().nextInt(wormholes.size())].getArrivalPortal().getSquare();
-        }
-        else {
-            return square;
-        }
-    }
-
-    /**
      * @mutates | this
+     *
+     * @throws IllegalArgumentException | wormhole == null
      *
      * @post | getWormholes().size() == old(getWormholes().size()) + 1
      */
@@ -75,6 +79,8 @@ public class DeparturePortal {
 
     /**
      * @mutates | this
+     *
+     * @throws IllegalArgumentException | wormhole == null
      *
      * @post | getWormholes().size() == old(getWormholes().size()) - 1
      */

@@ -42,6 +42,7 @@ public class Wormhole {
             throw new IllegalArgumentException("Wrong parameters");
         }
         this.arrivalPortal = arrivalPortal;
+        this.arrivalPortal.join(this);
         this.departurePortal = departurePortal;
         this.departurePortal.join(this);
     }
@@ -51,14 +52,16 @@ public class Wormhole {
      *
      * @throws IllegalArgumentException | arrivalPortal == null
      *
-     * @post | getArrivalPortal().equals(arrivalPortal)
+     * @post | getArrivalPortal() == arrivalPortal
      */
     public void setArrivalPortal(ArrivalPortal arrivalPortal) {
         if (arrivalPortal == null) {
             throw new IllegalArgumentException("Wrong parameter");
         }
 
+        this.arrivalPortal.remove(this);
         this.arrivalPortal = arrivalPortal;
+        this.arrivalPortal.join(this);
     }
 
     /**
