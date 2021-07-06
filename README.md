@@ -1,7 +1,6 @@
 # H02C5a
 
-In-depth study of a structured and disciplined approach to develop medium-sized, sequential software systems using the paradigm of object oriented programming.  
-Class notes are [here](https://btj.github.io/ogp-notes/)
+In-depth study of a structured and disciplined approach to develop medium-sized, sequential software systems using the paradigm of object oriented programming.  Class notes are [here](https://btj.github.io/ogp-notes/)
 
 ### Part I:
 
@@ -17,4 +16,4 @@ Develop, in package `pacman.wormholes`, an abstraction for manipulating graphs w
 
 ### Notes regarding the course
 
-Damn this documentation madness! 
+Damn this documentation madness!
