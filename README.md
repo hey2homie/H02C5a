@@ -15,6 +15,6 @@ In this [second part](https://btj.github.io/ogp-notes/pacman-part2.html) of the 
 
 Develop, in package `pacman.wormholes`, an abstraction for manipulating graphs whose nodes are departure portals (represented by instances of class `DeparturePortal`), arrival portals (represented by instances of class `ArrivalPortal`), and wormholes (represented by instances of class `Wormhole`). Extend class `Maze` so that it also keeps a list of departure portals, a list of arrival portals, and a list of wormholes.
 
-##### Notes regarding the course
+### Notes regarding the course
 
 Damn this documentation madness! 
