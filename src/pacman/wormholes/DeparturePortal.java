@@ -2,12 +2,12 @@ package pacman.wormholes;
 
 import pacman.Square;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 /**
  * @invar | getSquare() != null
- * @mutable
+ * @invar | getWormholes() != null
+ * @invar | getWormholes().stream().allMatch(wormhole -> wormhole.getDeparturePortal() == this)
  */
 public class DeparturePortal {
 
@@ -15,15 +15,18 @@ public class DeparturePortal {
      * @representationObjects
      * @peerObject
      */
-    private final HashSet<Wormhole> wormholes = new HashSet<>();
+    final Set<Wormhole> wormholes = new HashSet<>();
 
     /**
      * @invar | square != null
+     * @invar | wormholes != null
+     * @invar | wormholes.stream().allMatch(wormhole -> wormhole.start == this)
      */
-    private final Square square;
+    final Square square;
 
     /**
      * @basic
+     * @immutable
      */
     public Square getSquare() {
         return square;
@@ -31,19 +34,7 @@ public class DeparturePortal {
 
     /**
      * @basic
-     */
-    public Square getRandomArrivalSquare() {
-        if (wormholes.size() != 0) {
-            Wormhole[] arrayNumbers = wormholes.toArray(new Wormhole[0]);
-            return arrayNumbers[new Random().nextInt(wormholes.size())].getArrivalPortal().getSquare();
-        }
-        else {
-            return square;
-        }
-    }
-
-    /**
-     * @basic
+     * @creates | result
      * @peerObjects
      */
     public Set<Wormhole> getWormholes() {
@@ -51,44 +42,10 @@ public class DeparturePortal {
     }
 
     /**
-     * @throws IllegalArgumentException | square == null
-     *
+     * @post | getWormholes().isEmpty()
      * @post | getSquare() == square
      */
     public DeparturePortal(Square square) {
-        if (square == null) {
-            throw new IllegalArgumentException("Wrong parameter");
-        }
         this.square = square;
-    }
-
-    /**
-     * @mutates | this
-     *
-     * @throws IllegalArgumentException | wormhole == null
-     *
-     * @post | getWormholes().size() == old(getWormholes().size()) + 1
-     */
-    void join(Wormhole wormhole) {
-        if (wormhole == null) {
-            throw new IllegalArgumentException("Wrong parameter");
-        }
-
-        this.wormholes.add(wormhole);
-    }
-
-    /**
-     * @mutates | this
-     *
-     * @throws IllegalArgumentException | wormhole == null
-     *
-     * @post | getWormholes().size() == old(getWormholes().size()) - 1
-     */
-    void remove(Wormhole wormhole) {
-        if (wormhole == null) {
-            throw new IllegalArgumentException("Wrong parameter");
-        }
-
-        this.wormholes.remove(wormhole);
     }
 }

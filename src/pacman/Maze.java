@@ -110,12 +110,16 @@ public class Maze {
 	}
 
 	private Square checkForPortal(Square square) {
-		for (Wormhole wormhole : wormholes) {
-			if (square.equals(wormhole.getDeparturePortal().getSquare())) {
-				return wormhole.getDeparturePortal().getRandomArrivalSquare();
+		for (DeparturePortal portal : departurePortals) {
+			if (portal.getSquare().equals(square)) {
+				Wormhole[] wormholes = portal.getWormholes().toArray(Wormhole[]::new);
+				if (wormholes.length > 0) {
+					Wormhole wormhole = wormholes[random.nextInt(wormholes.length)];
+					return wormhole.getArrivalPortal().getSquare();
+				}
+				break;
 			}
 		}
-
 		return square;
 	}
 }

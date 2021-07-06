@@ -7,77 +7,46 @@ import java.util.Set;
 
 /**
  * @invar | getSquare() != null
- * 
- * @immutable
+ * @invar | getWormholes() != null
+ * @invar | getWormholes().stream().allMatch(wormhole -> wormhole.getArrivalPortal() == this)
  */
 public class ArrivalPortal {
 
     /**
      * @invar | square != null
+     * @invar | wormholes != null
+     * @invar | wormholes.stream().allMatch(wormhole -> wormhole.end == this)
      */
-    private final Square square;
+    final Square square;
 
     /**
      * @representationObjects
      * @peerObject
      */
-    private final HashSet<Wormhole> wormholes = new HashSet<>();
+    final Set<Wormhole> wormholes = new HashSet<>();
 
     /**
-     * @basic
-     */
-    public Square getSquare() {
-        return square;
-    }
-    
-    /**
-     * @basic
-     * @peerObjects
-     */
-    public Set<Wormhole> getWormholes() {
-        return Set.copyOf(wormholes);
-    }
-    
-    /**
-     * @throws IllegalArgumentException | square == null
-     *
      * @post | getSquare() == square
+     * @post | getWormholes().isEmpty()
      */
     public ArrivalPortal(Square square) {
-        if (square == null) {
-            throw new IllegalArgumentException("Wrong parameter");
-        }
-
         this.square = square;
     }
 
     /**
-     * @mutates | this
-     *
-     * @throws IllegalArgumentException | wormhole == null
-     *
-     * @post | getWormholes().size() == old(getWormholes().size()) + 1
+     * @basic
+     * @immutable
      */
-    void join(Wormhole wormhole) {
-        if (wormhole == null) {
-            throw new IllegalArgumentException("Wrong parameter");
-        }
-
-        this.wormholes.add(wormhole);
+    public Square getSquare() {
+        return square;
     }
 
     /**
-     * @mutates | this
-     *
-     * @throws IllegalArgumentException | wormhole == null
-     *
-     * @post | getWormholes().size() == old(getWormholes().size()) - 1
+     * @basic
+     * @creates | result
+     * @peerObjects
      */
-    void remove(Wormhole wormhole) {
-        if (wormhole == null) {
-            throw new IllegalArgumentException("Wrong parameter");
-        }
-
-        this.wormholes.remove(wormhole);
+    public Set<Wormhole> getWormholes() {
+        return Set.copyOf(wormholes);
     }
 }
